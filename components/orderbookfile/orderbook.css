@@ -1,0 +1,76 @@
+.price-all {
+    display: flex;
+    margin-top: 30px;
+    gap: 10px;
+    justify-content: center;
+}
+
+
+.order-maker {
+    display: flex;
+    justify-content: center;
+}
+
+.market-order {
+    
+    display: flex;
+    margin-top: 29px;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.market-limit-data {
+    display: flex;
+    gap: 302px;
+}
+
+.limit-order {
+    display: flex;
+    margin-top: 29px;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.buyandsell {
+    display: flex;
+
+    gap: 10px;
+}
+
+.buybutton {
+    background-color: #0aa869; 
+    color: white; 
+    border: none; 
+    width: 48px;
+    height: 20px;
+    transition: 0.3s;
+}
+
+.buybutton:hover {
+    background-color: #078c5f; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    cursor: pointer; 
+}
+
+
+
+.sellbutton {
+    background-color: #fe445c; 
+    color: white;
+    border: none; 
+    width: 48px;
+    height: 20px;
+    transition: 0.3s;
+}
+
+.sellbutton:hover {
+    background-color: #e03b4c; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.quantity-data-space {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
