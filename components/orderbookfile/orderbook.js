@@ -3,36 +3,42 @@ import React, { useState } from 'react';
 import OrderBookData from '../orderbook-data/orderbookdata'; 
 import "./orderbook.css";
 
-
 const OrderBook = () => {
-  const [marketQuantity, setMarketQuantity] = useState(100); 
+  const [marketQuantity, setMarketQuantity] = useState(100);
   const [limitQuantity, setLimitQuantity] = useState(100);
-  const [limitPrice, setLimitPrice] = useState(''); 
+  const [limitPrice, setLimitPrice] = useState('');
+  const [ownerName, setOwnerName] = useState(''); 
   const [buyOrders, setBuyOrders] = useState([]);
-  const [sellOrders, setSellOrders] = useState([]); 
+  const [sellOrders, setSellOrders] = useState([]);
 
   const handleMarketBuy = () => {
-    const newBuyOrder = { id: Math.random(), content: `Q${marketQuantity} (Market)` };
+    const newBuyOrder = {
+      id: Math.random(),
+      content: `Owner: ${ownerName}, Q${marketQuantity} (Market)`,
+    };
     setBuyOrders(prevOrders => [...prevOrders, newBuyOrder]);
   };
 
   const handleMarketSell = () => {
-    const newSellOrder = { id: Math.random(), content: `Q${marketQuantity} (Market)` };
+    const newSellOrder = {
+      id: Math.random(),
+      content: `Owner: ${ownerName}, Q${marketQuantity} (Market)`,
+    };
     setSellOrders(prevOrders => [...prevOrders, newSellOrder]);
   };
 
   const handleLimitBuy = () => {
-    const newBuyOrder = { 
-      id: Math.random(), 
-      content: `Q${limitQuantity} at $${limitPrice} (Limit)` 
+    const newBuyOrder = {
+      id: Math.random(),
+      content: `Owner: ${ownerName}, Q${limitQuantity} at $${limitPrice} (Limit)`,
     };
     setBuyOrders(prevOrders => [...prevOrders, newBuyOrder]);
   };
 
   const handleLimitSell = () => {
-    const newSellOrder = { 
-      id: Math.random(), 
-      content: `Q${limitQuantity} at $${limitPrice} (Limit)` 
+    const newSellOrder = {
+      id: Math.random(),
+      content: `Owner: ${ownerName}, Q${limitQuantity} at $${limitPrice} (Limit)`,
     };
     setSellOrders(prevOrders => [...prevOrders, newSellOrder]);
   };
@@ -49,6 +55,10 @@ const OrderBook = () => {
     setLimitPrice(event.target.value);
   };
 
+  const handleOwnerNameChange = (event) => {
+    setOwnerName(event.target.value);
+  };
+
   return (
     <>
       <div className="order-maker">
@@ -60,6 +70,14 @@ const OrderBook = () => {
             <div>
               <span> $0.6969</span>
             </div>
+          </div>
+          <div className="owner-input">
+            Owner Name:
+            <input 
+              type="text" 
+              value={ownerName} 
+              onChange={handleOwnerNameChange} 
+            />
           </div>
           <div className="market-limit-data">
             <div className="market-order">
