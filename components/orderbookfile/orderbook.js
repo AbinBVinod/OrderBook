@@ -1,7 +1,8 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import OrderBookData from '../orderbook-data/orderbookdata'; 
 import "./orderbook.css";
+import CoinPrice from '@/db/Api/priceaction';
 
 const OrderBook = () => {
   const [marketQuantity, setMarketQuantity] = useState(100);
@@ -10,11 +11,17 @@ const OrderBook = () => {
   const [ownerName, setOwnerName] = useState(''); 
   const [buyOrders, setBuyOrders] = useState([]);
   const [sellOrders, setSellOrders] = useState([]);
+  const [currentPrice, setCurrentPrice] = useState('');
 
+  const handlePriceUpdate = (newPrice) => {
+    setCurrentPrice(newPrice); 
+  }; 
+
+  //for market buy data
   const handleMarketBuy = () => {
     const newBuyOrder = {
       id: Math.random(),
-      content: `Owner: ${ownerName}, Q${marketQuantity} (Market)`,
+      content: `Owner: ${ownerName}, Q${marketQuantity} at $${currentPrice} (Market)`, 
     };
     setBuyOrders(prevOrders => [...prevOrders, newBuyOrder]);
   };
@@ -22,11 +29,12 @@ const OrderBook = () => {
   const handleMarketSell = () => {
     const newSellOrder = {
       id: Math.random(),
-      content: `Owner: ${ownerName}, Q${marketQuantity} (Market)`,
+      content: `Owner: ${ownerName}, Q${marketQuantity} at $${currentPrice} (Market)`,
     };
     setSellOrders(prevOrders => [...prevOrders, newSellOrder]);
   };
-
+  
+  //for the limit buy
   const handleLimitBuy = () => {
     const newBuyOrder = {
       id: Math.random(),
@@ -68,7 +76,7 @@ const OrderBook = () => {
               <h4>Current Price</h4>
             </div>
             <div>
-              <span> $0.6969</span>
+              <span> <CoinPrice onPriceUpdate={handlePriceUpdate} /></span>
             </div>
           </div>
           <div className="owner-input">
