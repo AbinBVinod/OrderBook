@@ -1,63 +1,87 @@
 .order-data-all {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-   flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  flex-direction: column;
 }
 
 .order-buy-sell-all {
-    display: flex;
-   
-    margin-top: 70px;
-    gap: 277px;
-}.order-data-all {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .buttons {
-    display: flex;
-    margin-bottom: 20px;
-    gap: 319px;
+  display: flex;
+  margin-bottom: 20px;
+  gap: 319px;
 }
 
-
-.buy-order-book, .sell-order-book {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-}
-
-.buy-order-book  {
-    color: green;
-}
-.sell-order-book  {
-    color: red;
-}
-
-
-.order-entry {
-    opacity: 0;
-    animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
+.buy-order-book,
+.sell-order-book {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 }
 
 .buy-order-book {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
+  color: green;
+}
+.sell-order-book {
+  color: red;
 }
 
+.order-entry {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.buy-order-book {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
 
 .sell-order-book {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.order-entry-buy {
+    color: green;
+  }
+  
+  .order-entry-sell {
+    color: red;
+  }
+  
+
+.orderbook-and-trade {
+  display: flex;
+  gap: 436px;
+}
+
+.executed-trades {
+  margin-top: 20px;
+}
+
+.all-trades-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-entry-buy,
+.order-entry-sell {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  margin: 2px 0;
+  border-radius: 4px;
+  animation: fadeIn 1s forwards;
 }

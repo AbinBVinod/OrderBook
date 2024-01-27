@@ -1,0 +1,45 @@
+.trades-section {
+    background-color: #1c1c1c; /* Dark theme background for trades section */
+    color: #ffffff; /* Light theme text */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .trade {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #343434;
+
+  
+ 
+
+padding: 20px;
+border-radius: 8px;
+margin-top: 20px;
+}
+
+.trades-list {
+max-height: 300px;
+overflow-y: auto;
+}
+
+.trade {
+display: flex;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid #343434;
+}
+
+.trade.buy {
+color: #4caf50; /* Green text for buy trades */
+}
+
+.trade.sell {
+color: #f44336; /* Red text for sell trades */
+}
+
+.trade span {
+margin: 0 5px;
+}
