@@ -1,9 +1,8 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
 import OrderBookData from "../orderbook-data/orderbookdata";
 import "./orderbook.css";
 import CoinPrice from "@/db/Api/priceaction";
-import TradesSection from "../Trade-history/Tradehistory";
 
 const OrderBook = () => {
   const [buyOrders, setBuyOrders] = useState([]);
@@ -19,7 +18,24 @@ const OrderBook = () => {
     setCurrentPrice(newPrice);
   };
 
-  // executed trades
+  const sendOrderDataToServer = async (orderData) => {
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Order data could not be saved.');
+      }
+    } catch (error) {
+      console.error('Error sending order data:', error);
+    }
+  };
+
   const handleExecutedTrade = (type, quantity, price, orderType) => {
     const newTrade = {
       id: Math.random(),
@@ -27,9 +43,23 @@ const OrderBook = () => {
       content: `Owner: ${ownerName}, Q${quantity} at $${price} (${orderType})`,
     };
     setExecutedTrades((prevTrades) => [newTrade, ...prevTrades]);
+
+
+    const orderData = {
+      quantity,
+      filledQuantity: quantity, 
+      price,
+      side: type === "buy" ? "buy" : "sell",
+      type: orderType === "Market" ? "market" : "limit",
+      owner: ownerName,
+      status: 1, 
+      time: new Date(),
+    };
+
+    
+    sendOrderDataToServer(orderData);
   };
 
-  // market buy
   const handleMarketBuy = () => {
     const orderContent = `Owner: ${ownerName}, Q${marketQuantity} at $${currentPrice} (Market)`;
     setBuyOrders((prevOrders) => [
@@ -39,7 +69,6 @@ const OrderBook = () => {
     handleExecutedTrade("buy", marketQuantity, currentPrice, "Market");
   };
 
-  //  market sell
   const handleMarketSell = () => {
     const orderContent = `Owner: ${ownerName}, Q${marketQuantity} at $${currentPrice} (Market)`;
     setSellOrders((prevOrders) => [
@@ -49,7 +78,6 @@ const OrderBook = () => {
     handleExecutedTrade("sell", marketQuantity, currentPrice, "Market");
   };
 
-  //  limit buy
   const handleLimitBuy = () => {
     const orderContent = `Owner: ${ownerName}, Q${limitQuantity} at $${limitPrice} (Limit)`;
     setBuyOrders((prevOrders) => [
@@ -59,7 +87,6 @@ const OrderBook = () => {
     handleExecutedTrade("buy", limitQuantity, limitPrice, "Limit");
   };
 
-  // limit sell
   const handleLimitSell = () => {
     const orderContent = `Owner: ${ownerName}, Q${limitQuantity} at $${limitPrice} (Limit)`;
     setSellOrders((prevOrders) => [
@@ -163,7 +190,6 @@ const OrderBook = () => {
         sellOrders={sellOrders}
         executedTrades={executedTrades}
       />
-      {/* <TradesSection trades={trades} /> */}
     </>
   );
 };

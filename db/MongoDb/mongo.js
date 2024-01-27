@@ -1,51 +1,62 @@
-const mongoose = require("mongoose");
-// require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-const uri =  "mongodb+srv://abinpriv:qNEzR1S12TJ3UzvM@abin-mongodb.kiittkv.mongodb.net/?retryWrites=true&w=majority"
+const app = express();
+const port = process.env.PORT || 3001;
+const uri = "mongodb+srv://abinpriv:qNEzR1S12TJ3UzvM@abin-mongodb.kiittkv.mongodb.net/?retryWrites=true&w=majority";
 
+app.use(cors());
+app.use(bodyParser.json());
 
-async function run() {
-    try {
-     
-        await mongoose.connect(uri);
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-      
-        const orderSchema = new mongoose.Schema({
-            quantity: Number,
-            filledQuantity: Number,
-            price: Number,
-            side: Number,
-            type: Number,
-            owner: String,
-            status: Number,
-            time: Date
-        });
+const orderSchema = new mongoose.Schema({
+  quantity: Number,
+  filledQuantity: Number,
+  price: Number,
+  side: String, 
+  type: String, 
+  owner: String,
+  status: Number,
+  time: Date
+});
 
-     
-        const Order = mongoose.model('Order', orderSchema, 'OrderData');
+const Order = mongoose.model('Order', orderSchema);
 
-        const order = new Order({
-            quantity: 3,
-            filledQuantity: 0,
-            price: 2,
-            side: 2,
-            type: 2,
-            owner: "testing",
-            status: 1,
-            time: Date.now()
-        });
+app.post('/api/orders', async (req, res) => {
+  try {
+    const {
+      quantity,
+      filledQuantity,
+      price,
+      side,
+      type,
+      owner,
+      status,
+      time
+    } = req.body;
 
-        
-        await order.save();
-        console.log('Order saved:', order);
-    } catch (error) {
-      
-        console.error('Error occurred:', error);
-    } finally {
-     
-        await mongoose.connection.close();
-    }
-}
+    const order = new Order({
+      quantity,
+      filledQuantity,
+      price,
+      side,
+      type,
+      owner,
+      status,
+      time
+    });
 
+    await order.save();
+    res.status(200).json({ message: 'Order saved successfully' });
+  } catch (error) {
+    console.error('Error occurred:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
-run().catch(console.dir);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
